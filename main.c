@@ -211,7 +211,6 @@ int main(int argc, char *argv[])
 	}
 	
 	if (audio) {
-		
 		fmt.freq = 44100;
 		fmt.format = AUDIO_S16;
 		fmt.channels = 2;
@@ -230,7 +229,6 @@ int main(int argc, char *argv[])
 	Uint32 buffer[width*height];
 	
 	int x = 0;
-
 	int j = 0;
 	char filename[32];
 	
@@ -238,7 +236,6 @@ int main(int argc, char *argv[])
 	
 	done = 0;
 	while ( !done ) {
-
 		/* Check for events */
 		while ( SDL_PollEvent(&event) ) {
 			switch (event.type) {
@@ -252,8 +249,8 @@ int main(int argc, char *argv[])
 				case SDL_QUIT:
 					printf("Exiting at position %lu\n",ftell(f));
 					SDL_CloseAudio();
-					done = 1;
-					break;
+					SDL_Quit();
+					return 0;
 				case SDL_USEREVENT:
 					timer1 = SDL_AddTimer(delay, game_event_push, NULL);
 
@@ -265,7 +262,6 @@ int main(int argc, char *argv[])
 						puts("returned to beginning");
 					}
 					x = 0;
-					//memcpy(buffer, screen, width*height*4)
 					while(x<width*height) { 
 						bufp = (Uint32 *)screen->pixels + x; 
 						*bufp = (buffer[x] << leftshift >> rightshift);
